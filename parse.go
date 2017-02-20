@@ -73,7 +73,14 @@ func (t *Contain) isContainStructs(data interface{}, element interface{}, tag st
 			err = errors.Wrap(errors.New("the underly type of data is not struct"), "isContainStruct")
 			return
 		}
-		t.decodeStruct(elemDataVal, element, tag)
+		isExist, err = t.decodeStruct(elemDataVal, element, tag)
+		if err != nil {
+			err = errors.Wrap(err, "isContainStructs")
+			return
+		}
+		if isExist {
+			return true, nil
+		}
 	}
 	return false, nil
 }
@@ -81,7 +88,7 @@ func (t *Contain) isContainStructs(data interface{}, element interface{}, tag st
 // decode struct type
 func (t *Contain) decodeStruct(DataVal reflect.Value, element interface{}, tag string) (isExist bool, err error) {
 	noTag := false
-	if DataVal.Kind() == reflect.Struct {
+	if DataVal.Kind() != reflect.Struct {
 		err = errors.Wrap(errors.New("the value's kind is not struct"), "decodeStruct")
 		return
 	}
@@ -89,7 +96,7 @@ func (t *Contain) decodeStruct(DataVal reflect.Value, element interface{}, tag s
 	tagKind := getKind(target)
 	for index := 0; index < DataVal.NumField(); index++ {
 		dataElemVal := DataVal.Field(index)
-		typ := dataElemVal.Type()
+		typ := DataVal.Type()
 		if typ.Field(index).Name == tag {
 			noTag = true
 			switch kind := getKind(dataElemVal); kind {

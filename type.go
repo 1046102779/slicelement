@@ -30,7 +30,7 @@ func checkData(data interface{}) (err error) {
 	}
 	// check data: 2. 数据类型必须为slice或者array类型
 	dataVal := reflect.ValueOf(data)
-	if dataVal.Kind() != reflect.Slice || dataVal.Kind() != reflect.Array {
+	if dataVal.Kind() != reflect.Slice && dataVal.Kind() != reflect.Array {
 		err = errors.New("input: type of the first data must be slice or array")
 		return
 	}
@@ -57,8 +57,8 @@ func checkElement(element interface{}) (err error) {
 		err = errors.Wrap(errors.New("element only supports `struct`, `int`, `string` and `float`"), "checkElement")
 		return
 	}
-	if kind != reflect.Int || kind != reflect.String ||
-		kind != reflect.Float32 || kind != reflect.Uint {
+	if kind != reflect.Int && kind != reflect.String &&
+		kind != reflect.Float32 && kind != reflect.Uint {
 		err = errors.Wrap(errors.New("element only supports `struct`, `int`, `string` and `float`"), "checkElement")
 		return
 	}
@@ -83,7 +83,7 @@ func getKind(val reflect.Value) (kind reflect.Kind) {
 // get the kind of underly data type
 func getSliceUnderlyKind(data interface{}) (kind reflect.Kind, err error) {
 	value := reflect.ValueOf(data)
-	if value.Kind() != reflect.Slice || value.Kind() != reflect.Array {
+	if value.Kind() != reflect.Slice && value.Kind() != reflect.Array {
 		err = errors.Wrap(errors.New("only support `slice` and `array`"), "getSliceUnderlyKind")
 		return
 	}
@@ -92,7 +92,7 @@ func getSliceUnderlyKind(data interface{}) (kind reflect.Kind, err error) {
 		err = errors.Wrap(errors.New("data len is 0"), "getSliceUnderlyKind")
 		return
 	}
-	return reflect.Indirect(value.Index(0)).Kind(), nil
+	return getKind(reflect.Indirect(value.Index(0))), nil
 }
 
 // 该package入口，判断data是否含有element元素
