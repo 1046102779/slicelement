@@ -1,8 +1,8 @@
 #  package slicelement
 slicelement is a Go library for finding the input element whether exists in data of composite slice type, while providing helpful error handling. now it supports:
 
-1. the complex type contains []struct/[]*struct, []int/[]*int, []float/[]*float, []string/[]*string, []byte/[]*byte
-2. the element type contains struct, int, string, float and soon
+1. the complex type contains `[]struct/[]*struct`, `[]int/[]*int`, `[]float/[]*float`, `[]string/[]*string`, `[]byte/[]*byte`
+2. the element type contains `struct`, `int`, `string`, `float`, etc
 
 ## Installation
 
