@@ -4,7 +4,7 @@ go:
   - 1.4
   
 go_import_path:
-  - github.com/pkg/errors
+  - github.com/1046102779/errors
 
 script:
   - go test 
