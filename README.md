@@ -14,15 +14,15 @@ Standard  `go get`:
 
 ## Index
 
-when  the data is not `[]*struct/[]struct`, the third input param `tag` value is empty
+* when  the data is not `[]*struct/[]struct`, the third input param `tag` value is empty
 
 find the element whether exists in data, if exist, return true, nil 
 
-`slicelement.Contains(data interface{}, elem interface{}, tag string) (bool, error)`
+`$  slicelement.Contains(data interface{}, elem interface{}, tag string) (bool, error)`
 
 get the element index in data, if not exist, return -1, nil. 
 
-`slicelement.GetIndex(data interface{}, elem interface{}, tag string) (int, error)`
+`$  slicelement.GetIndex(data interface{}, elem interface{}, tag string) (int, error)`
 
 ## Usage & Example
 
