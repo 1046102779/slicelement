@@ -15,7 +15,15 @@ func Test_checkInputValid(t *testing.T) {
 		Args    args
 		WantErr bool
 	}{
-	// TODO: Add test cases.
+		// TODO: Add test cases.
+		{
+			Name: "Joe",
+			Args: args{
+				Data:    "data1",
+				Element: 1,
+			},
+			WantErr: true,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.Name, func(t *testing.T) {
@@ -122,7 +130,7 @@ func TestContains(t *testing.T) {
 		Name        string
 		Args        args
 		WantIsExist bool
-		wantErr     bool
+		WantErr     bool
 	}{
 	// TODO: Add test cases.
 	}
