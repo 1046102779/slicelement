@@ -95,9 +95,9 @@ func getSliceUnderlyKind(data interface{}) (kind reflect.Kind, err error) {
 	return getKind(reflect.Indirect(value.Index(0))), nil
 }
 
-// 该package入口，判断data是否含有element元素
+//  public method，the data whether exists element
 func Contains(data interface{}, element interface{}, tag string) (isExist bool, err error) {
-	// data只能是slice或者array数据类型
+	// data only supports slice or array type
 	if err = checkInputValid(data, element); err != nil {
 		err = errors.Wrap(err, "Contains")
 		return
