@@ -18,13 +18,18 @@ A quick code example is shown below:
 
 ### example 1: []struct  
 ```go 
+type Person struct {
+    Name     string
+    Age      int
+    Children []string
+}
 data := []*Person{
-    &Student{
+    &Person{
         Name:     "John",
         Age:      29,
         Children: []string{"David", "Lily", "Bruce Lee"},
     },
-    &Student{
+    &Person{
         Name:     "Joe",
         Age:      18,
         Children: []string{},
