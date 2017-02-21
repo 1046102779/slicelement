@@ -66,3 +66,7 @@ if isExist {
 }
 // output: elem in data is exist
 ```
+
+## TODO
+
+index, err := slicelement.Index(data, element, tag)

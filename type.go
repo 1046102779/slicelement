@@ -108,10 +108,42 @@ func Contains(data interface{}, element interface{}, tag string) (isExist bool, 
 		isExist, err = contain.isContainString(data, element)
 	case reflect.Int:
 		isExist, err = contain.isContainInt(data, element)
+	case reflect.Uint:
+		isExist, err = contain.isContainUint(data, element)
 	case reflect.Float32:
 		isExist, err = contain.isContainFloat32(data, element)
 	case reflect.Struct:
 		isExist, err = contain.isContainStructs(data, element, tag)
+	}
+	if err != nil {
+		err = errors.Wrap(err, "Contains")
+		return
+	}
+	return
+}
+
+func GetIndex(data interface{}, element interface{}, tag string) (index int, err error) {
+	// data only supports slice or array type
+	if err = checkInputValid(data, element); err != nil {
+		err = errors.Wrap(err, "Contains")
+		return
+	}
+	indexInstance := new(Index)
+	kind, err := getSliceUnderlyKind(data)
+	if err != nil {
+		return -1, err
+	}
+	switch kind {
+	case reflect.String:
+		index, err = indexInstance.getIndexString(data, element)
+	case reflect.Int:
+		index, err = indexInstance.getIndexInt(data, element)
+	case reflect.Uint:
+		index, err = indexInstance.getIndexUint(data, element)
+	case reflect.Float32:
+		index, err = indexInstance.getIndexFloat32(data, element)
+	case reflect.Struct:
+		index, err = indexInstance.getIndexStruct(data, element, tag)
 	}
 	if err != nil {
 		err = errors.Wrap(err, "Contains")
