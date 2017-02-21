@@ -53,10 +53,6 @@ func checkElement(element interface{}) (err error) {
 		value = reflect.Indirect(value)
 	}
 	kind := getKind(value)
-	if isPointer && kind != reflect.Struct {
-		err = errors.Wrap(errors.New("element only supports `struct`, `int`, `string` and `float`"), "checkElement")
-		return
-	}
 	if kind != reflect.Int && kind != reflect.String &&
 		kind != reflect.Float32 && kind != reflect.Uint {
 		err = errors.Wrap(errors.New("element only supports `struct`, `int`, `string` and `float`"), "checkElement")
