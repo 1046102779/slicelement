@@ -3,7 +3,8 @@ nguage: go
 go: 
   - 1.4
   
-install:
+go_import_path:
   - github.com/pkg/errors
+
 script:
   - go test 
