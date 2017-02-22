@@ -103,3 +103,8 @@ if err != nil {
 fmt.Println("index=", index)
 // output: index=1
 ```
+
+## TODO
+
+* add other list operations, include uion, interaction
+* add test data
