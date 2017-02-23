@@ -168,21 +168,21 @@ func (t *Union) getString(dataA interface{}, dataB interface{}) (result interfac
 	valueB := reflect.ValueOf(dataB)
 	result = dataA
 	resValue := reflect.ValueOf(result)
-	kind := reflect.ValueOf(dataA).Type().Kind()
-	for index := 0; index < valueB.NumField(); index++ {
+	kind := reflect.ValueOf(dataA).Type().Elem().Kind()
+	for index := 0; index < valueB.Len(); index++ {
 		var subIndex int = 0
-		for subIndex = 0; subIndex < resValue.NumField(); subIndex++ {
-			resElem := reflect.Indirect(resValue.Field(subIndex))
-			bElem := reflect.Indirect(valueB.Field(index))
+		for subIndex = 0; subIndex < resValue.Len(); subIndex++ {
+			resElem := reflect.Indirect(resValue.Index(subIndex))
+			bElem := reflect.Indirect(valueB.Index(index))
 			if resElem.Interface() == bElem.Interface() {
 				break
 			}
 		}
-		if subIndex == resValue.NumField() {
-			if kind == reflect.Ptr {
-				result = append(result.([]string), reflect.Indirect(valueB.Field(index)).Interface().(string))
+		if subIndex == resValue.Len() {
+			if kind != reflect.Ptr {
+				result = append(result.([]string), reflect.Indirect(valueB.Index(index)).Interface().(string))
 			} else {
-				result = append(result.([]*string), reflect.Indirect(valueB.Field(index)).Interface().(*string))
+				result = append(result.([]*string), valueB.Index(index).Interface().(*string))
 			}
 		}
 	}
