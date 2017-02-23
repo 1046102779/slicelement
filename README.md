@@ -106,5 +106,5 @@ fmt.Println("index=", index)
 
 ## TODO
 
-* add other list operations, include uion, interaction
+* add other list operations, include uion, interaction and difference
 * add test data

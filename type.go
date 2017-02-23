@@ -83,12 +83,7 @@ func getSliceUnderlyKind(data interface{}) (kind reflect.Kind, err error) {
 		err = errors.Wrap(errors.New("only support `slice` and `array`"), "getSliceUnderlyKind")
 		return
 	}
-	len := value.Len()
-	if len <= 0 {
-		err = errors.Wrap(errors.New("data len is 0"), "getSliceUnderlyKind")
-		return
-	}
-	return getKind(reflect.Indirect(value.Index(0))), nil
+	return value.Type().Elem().Kind(), nil
 }
 
 //  public method，the data whether exists element
