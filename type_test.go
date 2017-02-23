@@ -66,7 +66,7 @@ func Test_checkElement(t *testing.T) {
 	}
 }
 
-func Test_getKind(t *testing.T) {
+func Test_getKindByValue(t *testing.T) {
 	type args struct {
 		val reflect.Value
 	}
@@ -79,8 +79,8 @@ func Test_getKind(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.Name, func(t *testing.T) {
-			if gotKind := getKind(tt.Args.val); gotKind != tt.wantKind {
-				t.Errorf("getKind() = %v, want %v", gotKind, tt.wantKind)
+			if gotKind := getKindByValue(tt.Args.val); gotKind != tt.wantKind {
+				t.Errorf("getKindByValue() = %v, want %v", gotKind, tt.wantKind)
 			}
 		})
 	}
