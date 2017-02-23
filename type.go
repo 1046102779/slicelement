@@ -52,7 +52,7 @@ func checkElement(element interface{}) (err error) {
 		}
 		value = reflect.Indirect(value)
 	}
-	kind := getKind(value)
+	kind := getKindByValue(value)
 	if kind != reflect.Int && kind != reflect.String &&
 		kind != reflect.Float32 && kind != reflect.Uint {
 		err = errors.Wrap(errors.New("element only supports `struct`, `int`, `string` and `float`"), "checkElement")
@@ -61,8 +61,22 @@ func checkElement(element interface{}) (err error) {
 	return
 }
 
-func getKind(val reflect.Value) (kind reflect.Kind) {
+func getKindByValue(val reflect.Value) (kind reflect.Kind) {
 	kind = val.Kind()
+
+	switch {
+	case kind >= reflect.Int && kind <= reflect.Int64:
+		return reflect.Int
+	case kind >= reflect.Uint && kind <= reflect.Uint64:
+		return reflect.Uint
+	case kind >= reflect.Float32 && kind <= reflect.Float64:
+		return reflect.Float32
+	default:
+		return kind
+	}
+}
+
+func getKindByKind(kind reflect.Kind) (dest reflect.Kind) {
 
 	switch {
 	case kind >= reflect.Int && kind <= reflect.Int64:
@@ -83,7 +97,11 @@ func getSliceUnderlyKind(data interface{}) (kind reflect.Kind, err error) {
 		err = errors.Wrap(errors.New("only support `slice` and `array`"), "getSliceUnderlyKind")
 		return
 	}
-	return value.Type().Elem().Kind(), nil
+	typ := value.Type().Elem()
+	for typ.Kind() == reflect.Ptr {
+		typ = typ.Elem()
+	}
+	return typ.Kind(), nil
 }
 
 //  public method，the data whether exists element
@@ -98,6 +116,7 @@ func Contains(data interface{}, element interface{}, tag string) (isExist bool, 
 	if err != nil {
 		return false, err
 	}
+	kind = getKindByKind(kind)
 	switch kind {
 	case reflect.String:
 		isExist, err = contain.isContainString(data, element)
@@ -128,6 +147,7 @@ func GetIndex(data interface{}, element interface{}, tag string) (index int, err
 	if err != nil {
 		return -1, err
 	}
+	kind = getKindByKind(kind)
 	switch kind {
 	case reflect.String:
 		index, err = indexInstance.getIndexString(data, element)

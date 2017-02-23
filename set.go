@@ -83,18 +83,81 @@ func GetUnion(dataA interface{}, dataB interface{}, tagName string) (result inte
 	} else if !needAdd {
 		return dataA, nil
 	}
-	// struct type
-	// not struct type, include string, int, float32 etc.
+	union := &Union{}
+	kindA, err := getSliceUnderlyKind(dataA)
+	if err != nil {
+		err = errors.Wrap(err, "GetUnion")
+		return
+	}
+	kindA = getKindByKind(kindA)
+	switch kindA {
+	case reflect.Int:
+		result, err = union.getInt(dataA, dataB)
+	case reflect.Float32:
+		result, err = union.getFloat32(dataA, dataB)
+	case reflect.String:
+		result, err = union.getString(dataA, dataB)
+	case reflect.Struct:
+		result, err = union.getStruct(dataA, dataB, tagName)
+	}
 	return
 }
 
 // interaction operation
 func GetInteraction(dataA interface{}, dataB interface{}, tagName string) (result interface{}, err error) {
+	var needAdd bool = false
+	if needAdd, err = checkSetInputData(dataA, dataB); err != nil {
+		err = errors.Wrap(err, "Union")
+		return
+	} else if !needAdd {
+		return dataA, nil
+	}
+	interaction := &Interaction{}
+	kindA, err := getSliceUnderlyKind(dataA)
+	if err != nil {
+		err = errors.Wrap(err, "GetInteraction")
+		return
+	}
+	kindA = getKindByKind(kindA)
+	switch kindA {
+	case reflect.Int:
+		result, err = interaction.getInt(dataA, dataB)
+	case reflect.Float32:
+		result, err = interaction.getFloat32(dataA, dataB)
+	case reflect.String:
+		result, err = interaction.getString(dataA, dataB)
+	case reflect.Struct:
+		result, err = interaction.getStruct(dataA, dataB, tagName)
+	}
 	return
 }
 
 // difference operation
 func GetDifference(dataA interface{}, dataB interface{}, tagName string) (result interface{}, err error) {
+	var needAdd bool = false
+	if needAdd, err = checkSetInputData(dataA, dataB); err != nil {
+		err = errors.Wrap(err, "Union")
+		return
+	} else if !needAdd {
+		return dataA, nil
+	}
+	diff := &Difference{}
+	kindA, err := getSliceUnderlyKind(dataA)
+	if err != nil {
+		err = errors.Wrap(err, "GetDifference")
+		return
+	}
+	kindA = getKindByKind(kindA)
+	switch kindA {
+	case reflect.Int:
+		result, err = diff.getInt(dataA, dataB)
+	case reflect.Float32:
+		result, err = diff.getFloat32(dataA, dataB)
+	case reflect.String:
+		result, err = diff.getString(dataA, dataB)
+	case reflect.Struct:
+		result, err = diff.getStruct(dataA, dataB, tagName)
+	}
 	return
 }
 
@@ -102,6 +165,27 @@ func GetDifference(dataA interface{}, dataB interface{}, tagName string) (result
 type Union struct{}
 
 func (t *Union) getString(dataA interface{}, dataB interface{}) (result interface{}, err error) {
+	valueB := reflect.ValueOf(dataB)
+	result = dataA
+	resValue := reflect.ValueOf(result)
+	kind := reflect.ValueOf(dataA).Type().Kind()
+	for index := 0; index < valueB.NumField(); index++ {
+		var subIndex int = 0
+		for subIndex = 0; subIndex < resValue.NumField(); subIndex++ {
+			resElem := reflect.Indirect(resValue.Field(subIndex))
+			bElem := reflect.Indirect(valueB.Field(index))
+			if resElem.Interface() == bElem.Interface() {
+				break
+			}
+		}
+		if subIndex == resValue.NumField() {
+			if kind == reflect.Ptr {
+				result = append(result.([]string), reflect.Indirect(valueB.Field(index)).Interface().(string))
+			} else {
+				result = append(result.([]*string), reflect.Indirect(valueB.Field(index)).Interface().(*string))
+			}
+		}
+	}
 	return
 }
 

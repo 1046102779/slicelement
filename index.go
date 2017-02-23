@@ -94,13 +94,13 @@ func (t *Index) decodeStruct(DataVal reflect.Value, element interface{}, tag str
 		return
 	}
 	target := reflect.ValueOf(element)
-	tagKind := getKind(target)
+	tagKind := getKindByValue(target)
 	for index := 0; index < DataVal.NumField(); index++ {
 		dataElemVal := DataVal.Field(index)
 		typ := DataVal.Type()
 		if typ.Field(index).Name == tag {
 			noTag = true
-			switch kind := getKind(dataElemVal); kind {
+			switch kind := getKindByValue(dataElemVal); kind {
 			case reflect.String:
 				if tagKind == reflect.String && target.String() == dataElemVal.String() {
 					return true, nil
