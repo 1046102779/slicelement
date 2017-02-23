@@ -168,7 +168,7 @@ func (t *Union) getString(dataA interface{}, dataB interface{}) (result interfac
 	valueB := reflect.ValueOf(dataB)
 	result = dataA
 	resValue := reflect.ValueOf(result)
-	kind := reflect.ValueOf(dataA).Type().Elem().Kind()
+	kind := getKindByKind(reflect.ValueOf(dataA).Type().Elem().Kind())
 	for index := 0; index < valueB.Len(); index++ {
 		var subIndex int = 0
 		for subIndex = 0; subIndex < resValue.Len(); subIndex++ {
@@ -190,10 +190,80 @@ func (t *Union) getString(dataA interface{}, dataB interface{}) (result interfac
 }
 
 func (t *Union) getInt(dataA interface{}, dataB interface{}) (result interface{}, err error) {
+	valueB := reflect.ValueOf(dataB)
+	result = dataA
+	resValue := reflect.ValueOf(result)
+	kind := getKindByKind(reflect.ValueOf(dataA).Type().Elem().Kind())
+	for index := 0; index < valueB.Len(); index++ {
+		var subIndex int = 0
+		for subIndex = 0; subIndex < resValue.Len(); subIndex++ {
+			resElem := reflect.Indirect(resValue.Index(subIndex))
+			bElem := reflect.Indirect(valueB.Index(index))
+			if resElem.Interface() == bElem.Interface() {
+				break
+			}
+		}
+		if subIndex == resValue.Len() {
+			if kind != reflect.Ptr {
+				kind = reflect.ValueOf(dataA).Type().Elem().Kind()
+				switch kind {
+				case reflect.Int:
+					result = append(result.([]int), reflect.Indirect(valueB.Index(index)).Interface().(int))
+				case reflect.Int32:
+					result = append(result.([]int32), reflect.Indirect(valueB.Index(index)).Interface().(int32))
+				case reflect.Int64:
+					result = append(result.([]int64), reflect.Indirect(valueB.Index(index)).Interface().(int64))
+				}
+			} else {
+				kind = reflect.ValueOf(dataA).Type().Elem().Kind()
+				switch kind {
+				case reflect.Int:
+					result = append(result.([]*int), valueB.Index(index).Interface().(*int))
+				case reflect.Int32:
+					result = append(result.([]*int32), valueB.Index(index).Interface().(*int32))
+				case reflect.Int64:
+					result = append(result.([]*int64), valueB.Index(index).Interface().(*int64))
+				}
+			}
+		}
+	}
 	return
 }
 
 func (t *Union) getFloat32(dataA interface{}, dataB interface{}) (result interface{}, err error) {
+	valueB := reflect.ValueOf(dataB)
+	result = dataA
+	resValue := reflect.ValueOf(result)
+	kind := getKindByKind(reflect.ValueOf(dataA).Type().Elem().Kind())
+	for index := 0; index < valueB.Len(); index++ {
+		var subIndex int = 0
+		for subIndex = 0; subIndex < resValue.Len(); subIndex++ {
+			resElem := reflect.Indirect(resValue.Index(subIndex))
+			bElem := reflect.Indirect(valueB.Index(index))
+			if resElem.Interface() == bElem.Interface() {
+				break
+			}
+		}
+		if subIndex == resValue.Len() {
+			if kind != reflect.Ptr {
+				kind = reflect.ValueOf(dataA).Type().Elem().Kind()
+				switch kind {
+				case reflect.Float32:
+					result = append(result.([]float32), reflect.Indirect(valueB.Index(index)).Interface().(float32))
+				case reflect.Float64:
+					result = append(result.([]float64), reflect.Indirect(valueB.Index(index)).Interface().(float64))
+				}
+			} else {
+				kind = reflect.ValueOf(dataA).Type().Elem().Kind()
+				switch kind {
+				case reflect.Float32:
+					result = append(result.([]*float32), valueB.Index(index).Interface().(*float32))
+				case reflect.Int64:
+					result = append(result.([]*float64), valueB.Index(index).Interface().(*float64))
+				}
+			}
+		}
+	}
 	return
 }
 
