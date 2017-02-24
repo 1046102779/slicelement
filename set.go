@@ -6,6 +6,7 @@ package slicelement
 
 import (
 	"reflect"
+	"strings"
 
 	"github.com/pkg/errors"
 )
@@ -91,12 +92,8 @@ func GetUnion(dataA interface{}, dataB interface{}, tagName string) (result inte
 	}
 	kindA = getKindByKind(kindA)
 	switch kindA {
-	case reflect.Int:
-		result, err = union.getInt(dataA, dataB)
-	case reflect.Float32:
-		result, err = union.getFloat32(dataA, dataB)
-	case reflect.String:
-		result, err = union.getString(dataA, dataB)
+	case reflect.Int, reflect.Float32, reflect.String:
+		result, err = union.getNonStruct(dataA, dataB)
 	case reflect.Struct:
 		result, err = union.getStruct(dataA, dataB, tagName)
 	}
@@ -120,12 +117,8 @@ func GetInteraction(dataA interface{}, dataB interface{}, tagName string) (resul
 	}
 	kindA = getKindByKind(kindA)
 	switch kindA {
-	case reflect.Int:
-		result, err = interaction.getInt(dataA, dataB)
-	case reflect.Float32:
-		result, err = interaction.getFloat32(dataA, dataB)
-	case reflect.String:
-		result, err = interaction.getString(dataA, dataB)
+	case reflect.Int, reflect.Float32, reflect.String:
+		result, err = interaction.getNonStruct(dataA, dataB)
 	case reflect.Struct:
 		result, err = interaction.getStruct(dataA, dataB, tagName)
 	}
@@ -149,12 +142,8 @@ func GetDifference(dataA interface{}, dataB interface{}, tagName string) (result
 	}
 	kindA = getKindByKind(kindA)
 	switch kindA {
-	case reflect.Int:
-		result, err = diff.getInt(dataA, dataB)
-	case reflect.Float32:
-		result, err = diff.getFloat32(dataA, dataB)
-	case reflect.String:
-		result, err = diff.getString(dataA, dataB)
+	case reflect.Int, reflect.Float32, reflect.String:
+		result, err = diff.getNonStruct(dataA, dataB)
 	case reflect.Struct:
 		result, err = diff.getStruct(dataA, dataB, tagName)
 	}
@@ -164,146 +153,158 @@ func GetDifference(dataA interface{}, dataB interface{}, tagName string) (result
 // union
 type Union struct{}
 
-func (t *Union) getString(dataA interface{}, dataB interface{}) (result interface{}, err error) {
+func (t *Union) getNonStruct(dataA interface{}, dataB interface{}) (result interface{}, err error) {
 	valueB := reflect.ValueOf(dataB)
-	result = dataA
-	resValue := reflect.ValueOf(result)
-	kind := getKindByKind(reflect.ValueOf(dataA).Type().Elem().Kind())
+	resultVal := reflect.ValueOf(dataA)
 	for index := 0; index < valueB.Len(); index++ {
 		var subIndex int = 0
-		for subIndex = 0; subIndex < resValue.Len(); subIndex++ {
-			resElem := reflect.Indirect(resValue.Index(subIndex))
+		for subIndex = 0; subIndex < resultVal.Len(); subIndex++ {
+			resultElem := reflect.Indirect(resultVal.Index(subIndex))
 			bElem := reflect.Indirect(valueB.Index(index))
-			if resElem.Interface() == bElem.Interface() {
+			if resultElem.Interface() == bElem.Interface() {
 				break
 			}
 		}
-		if subIndex == resValue.Len() {
-			if kind != reflect.Ptr {
-				result = append(result.([]string), reflect.Indirect(valueB.Index(index)).Interface().(string))
-			} else {
-				result = append(result.([]*string), valueB.Index(index).Interface().(*string))
-			}
+		if subIndex == resultVal.Len() {
+			resultVal = reflect.Append(resultVal, valueB.Index(index))
 		}
 	}
-	return
+	return resultVal.Interface(), nil
 }
 
-func (t *Union) getInt(dataA interface{}, dataB interface{}) (result interface{}, err error) {
-	valueB := reflect.ValueOf(dataB)
-	result = dataA
-	resValue := reflect.ValueOf(result)
-	kind := getKindByKind(reflect.ValueOf(dataA).Type().Elem().Kind())
-	for index := 0; index < valueB.Len(); index++ {
-		var subIndex int = 0
-		for subIndex = 0; subIndex < resValue.Len(); subIndex++ {
-			resElem := reflect.Indirect(resValue.Index(subIndex))
-			bElem := reflect.Indirect(valueB.Index(index))
-			if resElem.Interface() == bElem.Interface() {
-				break
-			}
-		}
-		if subIndex == resValue.Len() {
-			if kind != reflect.Ptr {
-				kind = reflect.ValueOf(dataA).Type().Elem().Kind()
-				switch kind {
-				case reflect.Int:
-					result = append(result.([]int), reflect.Indirect(valueB.Index(index)).Interface().(int))
-				case reflect.Int32:
-					result = append(result.([]int32), reflect.Indirect(valueB.Index(index)).Interface().(int32))
-				case reflect.Int64:
-					result = append(result.([]int64), reflect.Indirect(valueB.Index(index)).Interface().(int64))
-				}
-			} else {
-				kind = reflect.ValueOf(dataA).Type().Elem().Kind()
-				switch kind {
-				case reflect.Int:
-					result = append(result.([]*int), valueB.Index(index).Interface().(*int))
-				case reflect.Int32:
-					result = append(result.([]*int32), valueB.Index(index).Interface().(*int32))
-				case reflect.Int64:
-					result = append(result.([]*int64), valueB.Index(index).Interface().(*int64))
-				}
-			}
-		}
-	}
-	return
-}
-
-func (t *Union) getFloat32(dataA interface{}, dataB interface{}) (result interface{}, err error) {
-	valueB := reflect.ValueOf(dataB)
-	result = dataA
-	resValue := reflect.ValueOf(result)
-	kind := getKindByKind(reflect.ValueOf(dataA).Type().Elem().Kind())
-	for index := 0; index < valueB.Len(); index++ {
-		var subIndex int = 0
-		for subIndex = 0; subIndex < resValue.Len(); subIndex++ {
-			resElem := reflect.Indirect(resValue.Index(subIndex))
-			bElem := reflect.Indirect(valueB.Index(index))
-			if resElem.Interface() == bElem.Interface() {
-				break
-			}
-		}
-		if subIndex == resValue.Len() {
-			if kind != reflect.Ptr {
-				kind = reflect.ValueOf(dataA).Type().Elem().Kind()
-				switch kind {
-				case reflect.Float32:
-					result = append(result.([]float32), reflect.Indirect(valueB.Index(index)).Interface().(float32))
-				case reflect.Float64:
-					result = append(result.([]float64), reflect.Indirect(valueB.Index(index)).Interface().(float64))
-				}
-			} else {
-				kind = reflect.ValueOf(dataA).Type().Elem().Kind()
-				switch kind {
-				case reflect.Float32:
-					result = append(result.([]*float32), valueB.Index(index).Interface().(*float32))
-				case reflect.Int64:
-					result = append(result.([]*float64), valueB.Index(index).Interface().(*float64))
-				}
-			}
-		}
-	}
-	return
-}
-
+// tagName: unique key
 func (t *Union) getStruct(dataA interface{}, dataB interface{}, tagName string) (result interface{}, err error) {
-	return
+	if strings.TrimSpace(tagName) == "" {
+		err = errors.New("slice struct's FieldName can't be empty")
+		return
+	}
+	resultVal := reflect.ValueOf(dataA)
+	// use GetIndex
+	valueB := reflect.ValueOf(dataB)
+	dataBFieldIndex := getStructTagIndex(valueB.Type().Elem(), tagName)
+	if dataBFieldIndex < 0 {
+		err = errors.New("field `" + tagName + "` not exist in struct")
+		return
+	}
+	var isExist bool = false
+	for index := 0; index < valueB.Len(); index++ {
+		underlyFieldValueB := reflect.Indirect(valueB.Index(index).Field(dataBFieldIndex))
+		if isExist, err = Contains(dataA, underlyFieldValueB.Interface(), tagName); err != nil {
+			err = errors.Wrap(err, "getStruct")
+			return
+		} else if !isExist {
+			resultVal = reflect.Append(resultVal, valueB.Index(index))
+		}
+	}
+	return resultVal.Interface(), nil
+}
+
+// get index of the field name in  struct data
+func getStructTagIndex(typ reflect.Type, tagName string) int {
+	for index := 0; index < typ.NumField(); index++ {
+		if typ.Field(index).Name == tagName {
+			return index
+		}
+	}
+	return -1
 }
 
 // interaction
 type Interaction struct{}
 
-func (t *Interaction) getString(dataA interface{}, dataB interface{}) (result interface{}, err error) {
-	return
-}
-
-func (t *Interaction) getInt(dataA interface{}, dataB interface{}) (result interface{}, err error) {
-	return
-}
-
-func (t *Interaction) getFloat32(dataA interface{}, dataB interface{}) (result interface{}, err error) {
-	return
+func (t *Interaction) getNonStruct(dataA interface{}, dataB interface{}) (result interface{}, err error) {
+	valueB := reflect.ValueOf(dataB)
+	// new zero value
+	resultVal := reflect.MakeSlice(reflect.ValueOf(dataA).Type(), 0, 0)
+	valueA := reflect.ValueOf(dataA)
+	for index := 0; index < valueB.Len(); index++ {
+		var subIndex int = 0
+		for subIndex = 0; subIndex < valueA.Len(); subIndex++ {
+			aElem := reflect.Indirect(valueA.Index(subIndex))
+			bElem := reflect.Indirect(valueB.Index(index))
+			if aElem.Interface() == bElem.Interface() {
+				resultVal = reflect.Append(resultVal, valueB.Index(index))
+				break
+			}
+		}
+	}
+	return resultVal.Interface(), nil
 }
 
 func (t *Interaction) getStruct(dataA interface{}, dataB interface{}, tagName string) (result interface{}, err error) {
-	return
+	if strings.TrimSpace(tagName) == "" {
+		err = errors.New("slice struct's FieldName can't be empty")
+		return
+	}
+	// new zero value
+	resultVal := reflect.MakeSlice(reflect.ValueOf(dataA).Type(), 0, 0)
+	// use GetIndex
+	valueB := reflect.ValueOf(dataB)
+	dataBFieldIndex := getStructTagIndex(valueB.Type().Elem(), tagName)
+	if dataBFieldIndex < 0 {
+		err = errors.New("field `" + tagName + "` not exist in struct")
+		return
+	}
+	var isExist bool = false
+	for index := 0; index < valueB.Len(); index++ {
+		underlyFieldValueB := reflect.Indirect(valueB.Index(index).Field(dataBFieldIndex))
+		if isExist, err = Contains(dataA, underlyFieldValueB.Interface(), tagName); err != nil {
+			err = errors.Wrap(err, "getStruct")
+			return
+		} else if isExist {
+			resultVal = reflect.Append(resultVal, valueB.Index(index))
+		}
+	}
+	return resultVal.Interface(), nil
 }
 
 type Difference struct{}
 
-func (t *Difference) getString(dataA interface{}, dataB interface{}) (result interface{}, err error) {
-	return
-}
-
-func (t *Difference) getInt(dataA interface{}, dataB interface{}) (result interface{}, err error) {
-	return
-}
-
-func (t *Difference) getFloat32(dataA interface{}, dataB interface{}) (result interface{}, err error) {
-	return
+func (t *Difference) getNonStruct(dataA interface{}, dataB interface{}) (result interface{}, err error) {
+	valueB := reflect.ValueOf(dataB)
+	// new zero value
+	resultVal := reflect.MakeSlice(reflect.ValueOf(dataA).Type(), 0, 0)
+	valueA := reflect.ValueOf(dataA)
+	for index := 0; index < valueA.Len(); index++ {
+		var subIndex int = 0
+		for subIndex = 0; subIndex < valueB.Len(); subIndex++ {
+			aElem := reflect.Indirect(valueA.Index(index))
+			bElem := reflect.Indirect(valueB.Index(subIndex))
+			if aElem.Interface() == bElem.Interface() {
+				break
+			}
+		}
+		if subIndex == valueB.Len() {
+			resultVal = reflect.Append(resultVal, valueA.Index(index))
+		}
+	}
+	return resultVal.Interface(), nil
 }
 
 func (t *Difference) getStruct(dataA interface{}, dataB interface{}, tagName string) (result interface{}, err error) {
+	if strings.TrimSpace(tagName) == "" {
+		err = errors.New("slice struct's FieldName can't be empty")
+		return
+	}
+	// new zero value
+	resultVal := reflect.MakeSlice(reflect.ValueOf(dataA).Type(), 0, 0)
+	// use GetIndex
+	valueA := reflect.ValueOf(dataA)
+	dataAFieldIndex := getStructTagIndex(valueA.Type().Elem(), tagName)
+	if dataAFieldIndex < 0 {
+		err = errors.New("field `" + tagName + "` not exist in struct")
+		return
+	}
+	var isExist bool = false
+	for index := 0; index < valueA.Len(); index++ {
+		underlyFieldValueA := reflect.Indirect(valueA.Index(index).Field(dataAFieldIndex))
+		if isExist, err = Contains(dataB, underlyFieldValueA.Interface(), tagName); err != nil {
+			err = errors.Wrap(err, "getStruct")
+			return
+		} else if !isExist {
+			resultVal = reflect.Append(resultVal, valueA.Index(index))
+		}
+	}
+	return resultVal.Interface(), nil
 	return
 }
