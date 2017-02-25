@@ -12,7 +12,7 @@ func TestIndex_getIndexInt(t *testing.T) {
 	}
 	tests := []struct {
 		Name      string
-		T         *Index
+		T         *indexT
 		Args      args
 		WantIndex int
 		WantErr   bool
@@ -21,14 +21,14 @@ func TestIndex_getIndexInt(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.Name, func(t *testing.T) {
-			index := &Index{}
+			index := &indexT{}
 			gotIndex, err := index.getIndexInt(tt.Args.Data, tt.Args.Element)
 			if (err != nil) != tt.WantErr {
-				t.Errorf("Index.getIndexInt() error = %v, WantErr %v", err, tt.WantErr)
+				t.Errorf("Index.getindexTInt() error = %v, WantErr %v", err, tt.WantErr)
 				return
 			}
 			if gotIndex != tt.WantIndex {
-				t.Errorf("Index.getIndexInt() = %v, Want %v", gotIndex, tt.WantIndex)
+				t.Errorf("indexT.getIndexInt() = %v, Want %v", gotIndex, tt.WantIndex)
 			}
 		})
 	}
@@ -41,7 +41,7 @@ func TestIndex_getIndexString(t *testing.T) {
 	}
 	tests := []struct {
 		Name      string
-		T         *Index
+		T         *indexT
 		Args      args
 		WantIndex int
 		WantErr   bool
@@ -50,14 +50,14 @@ func TestIndex_getIndexString(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.Name, func(t *testing.T) {
-			index := &Index{}
+			index := &indexT{}
 			gotIndex, err := index.getIndexString(tt.Args.Data, tt.Args.Element)
 			if (err != nil) != tt.WantErr {
-				t.Errorf("Index.getIndexString() error = %v, WantErr %v", err, tt.WantErr)
+				t.Errorf("indexT.getIndexString() error = %v, WantErr %v", err, tt.WantErr)
 				return
 			}
 			if gotIndex != tt.WantIndex {
-				t.Errorf("Index.getIndexString() = %v, Want %v", gotIndex, tt.WantIndex)
+				t.Errorf("indexT.getIndexString() = %v, Want %v", gotIndex, tt.WantIndex)
 			}
 		})
 	}
@@ -70,7 +70,7 @@ func TestIndex_getIndexFloat32(t *testing.T) {
 	}
 	tests := []struct {
 		Name      string
-		T         *Index
+		T         *indexT
 		Args      args
 		WantIndex int
 		WantErr   bool
@@ -79,14 +79,14 @@ func TestIndex_getIndexFloat32(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.Name, func(t *testing.T) {
-			index := &Index{}
+			index := &indexT{}
 			gotIndex, err := index.getIndexFloat32(tt.Args.Data, tt.Args.Element)
 			if (err != nil) != tt.WantErr {
-				t.Errorf("Index.getIndexFloat32() error = %v, WantErr %v", err, tt.WantErr)
+				t.Errorf("indexT.getIndexFloat32() error = %v, WantErr %v", err, tt.WantErr)
 				return
 			}
 			if gotIndex != tt.WantIndex {
-				t.Errorf("Index.getIndexFloat32() = %v, Want %v", gotIndex, tt.WantIndex)
+				t.Errorf("Index.getindexTFloat32() = %v, Want %v", gotIndex, tt.WantIndex)
 			}
 		})
 	}
@@ -99,7 +99,7 @@ func TestIndex_getIndexUint(t *testing.T) {
 	}
 	tests := []struct {
 		Name      string
-		T         *Index
+		T         *indexT
 		Args      Args
 		WantIndex int
 		WantErr   bool
@@ -108,14 +108,14 @@ func TestIndex_getIndexUint(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.Name, func(t *testing.T) {
-			index := &Index{}
+			index := &indexT{}
 			gotIndex, err := index.getIndexUint(tt.Args.Data, tt.Args.Element)
 			if (err != nil) != tt.WantErr {
-				t.Errorf("Index.getIndexUint() error = %v, WantErr %v", err, tt.WantErr)
+				t.Errorf("indexT.getIndexUint() error = %v, WantErr %v", err, tt.WantErr)
 				return
 			}
 			if gotIndex != tt.WantIndex {
-				t.Errorf("Index.getIndexUint() = %v, Want %v", gotIndex, tt.WantIndex)
+				t.Errorf("indexT.getIndexUint() = %v, Want %v", gotIndex, tt.WantIndex)
 			}
 		})
 	}
@@ -129,7 +129,7 @@ func TestIndex_getIndexStruct(t *testing.T) {
 	}
 	tests := []struct {
 		Name      string
-		T         *Index
+		T         *indexT
 		Args      Args
 		WantIndex int
 		WantErr   bool
@@ -138,10 +138,10 @@ func TestIndex_getIndexStruct(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.Name, func(t *testing.T) {
-			index := &Index{}
+			index := &indexT{}
 			gotIndex, err := index.getIndexStruct(tt.Args.Data, tt.Args.Element, tt.Args.Tag)
 			if (err != nil) != tt.WantErr {
-				t.Errorf("Index.getIndexStruct() error = %v, WantErr %v", err, tt.WantErr)
+				t.Errorf("indexT.getIndexStruct() error = %v, WantErr %v", err, tt.WantErr)
 				return
 			}
 			if gotIndex != tt.WantIndex {
@@ -159,7 +159,7 @@ func TestIndex_decodeStruct(t *testing.T) {
 	}
 	tests := []struct {
 		Name        string
-		T           *Index
+		T           *indexT
 		Args        args
 		WantIsExist bool
 		WantErr     bool
@@ -168,14 +168,14 @@ func TestIndex_decodeStruct(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.Name, func(t *testing.T) {
-			index := &Index{}
+			index := &indexT{}
 			gotIsExist, err := index.decodeStruct(tt.Args.DataVal, tt.Args.Element, tt.Args.Tag)
 			if (err != nil) != tt.WantErr {
-				t.Errorf("Index.decodeStruct() error = %v, WantErr %v", err, tt.WantErr)
+				t.Errorf("indexT.decodeStruct() error = %v, WantErr %v", err, tt.WantErr)
 				return
 			}
 			if gotIsExist != tt.WantIsExist {
-				t.Errorf("Index.decodeStruct() = %v, Want %v", gotIsExist, tt.WantIsExist)
+				t.Errorf("indexT.decodeStruct() = %v, Want %v", gotIsExist, tt.WantIsExist)
 			}
 		})
 	}

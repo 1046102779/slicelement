@@ -2,8 +2,6 @@ package slicelement
 
 import (
 	"fmt"
-
-	"github.com/1046102779/slicelement"
 )
 
 func ExampleContains_int() {
@@ -11,7 +9,7 @@ func ExampleContains_int() {
 		data []int = []int{1, 2, 3, 4, 5}
 		elem int   = 2
 	)
-	isExist, err := slicelement.Contains(data, elem, "")
+	isExist, err := Contains(data, elem, "")
 	if err != nil {
 		fmt.Println(err.Error())
 	}
@@ -28,7 +26,7 @@ func ExampleContains_uint() {
 		data []uint = []uint{1, 2, 3, 4, 5}
 		elem uint   = 2
 	)
-	isExist, err := slicelement.Contains(data, elem, "")
+	isExist, err := Contains(data, elem, "")
 	if err != nil {
 		fmt.Println(err.Error())
 	}
@@ -44,7 +42,7 @@ func ExampleContains_string() {
 		data []string = []string{"abc", "def", "hig"}
 		elem string   = "def"
 	)
-	isExist, err := slicelement.Contains(data, elem, "")
+	isExist, err := Contains(data, elem, "")
 	if err != nil {
 		fmt.Println(err.Error())
 	}
@@ -60,7 +58,7 @@ func ExampleContains_float32() {
 		data []float32 = []float32{1, 2, 3, 4, 5}
 		elem float32   = 2
 	)
-	isExist, err := slicelement.Contains(data, elem, "")
+	isExist, err := Contains(data, elem, "")
 	if err != nil {
 		fmt.Println(err.Error())
 	}

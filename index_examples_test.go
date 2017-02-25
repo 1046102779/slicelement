@@ -2,16 +2,14 @@ package slicelement
 
 import (
 	"fmt"
-
-	"github.com/1046102779/slicelement"
 )
 
-func ExampleIndex_int() {
+func ExampleGetIndex_int() {
 	var (
 		data []int = []int{1, 2, 3, 4, 5}
 		elem int   = 2
 	)
-	index, err := slicelement.GetIndex(data, elem, "")
+	index, err := GetIndex(data, elem, "")
 	if err != nil {
 		fmt.Println(err.Error())
 	}
@@ -19,12 +17,12 @@ func ExampleIndex_int() {
 	return
 }
 
-func ExampleIndex_uint() {
+func ExampleGetIndex_uint() {
 	var (
 		data []uint = []uint{1, 2, 3, 4, 5}
 		elem uint   = 2
 	)
-	index, err := slicelement.GetIndex(data, elem, "")
+	index, err := GetIndex(data, elem, "")
 	if err != nil {
 		fmt.Println(err.Error())
 	}
@@ -32,12 +30,12 @@ func ExampleIndex_uint() {
 	return
 }
 
-func ExampleIndex_string() {
+func ExampleGetIndex_string() {
 	var (
 		data []string = []string{"abc", "def", "hig"}
 		elem string   = "def"
 	)
-	index, err := slicelement.GetIndex(data, elem, "")
+	index, err := GetIndex(data, elem, "")
 	if err != nil {
 		fmt.Println(err.Error())
 	}
@@ -45,12 +43,12 @@ func ExampleIndex_string() {
 	return
 }
 
-func ExampleIndex_float32() {
+func ExampleGetIndex_float32() {
 	var (
 		data []float32 = []float32{1, 2, 3, 4, 5}
 		elem float32   = 2
 	)
-	index, err := slicelement.GetIndex(data, elem, "")
+	index, err := GetIndex(data, elem, "")
 	if err != nil {
 		fmt.Println(err.Error())
 	}
@@ -58,7 +56,7 @@ func ExampleIndex_float32() {
 	return
 }
 
-func ExampleIndex_struct() {
+func ExampleGetIndex_struct() {
 	type Person struct {
 		Name     string
 		Age      int
@@ -77,11 +75,11 @@ func ExampleIndex_struct() {
 		},
 	}
 	elem := 18
-	index, err := slicelement.GetIndex(data, elem, "Age")
+	index, err := GetIndex(data, elem, "Age")
 	if err != nil {
 		//fmt.Println(errors.Cause(err).Error())
 		fmt.Println(err.Error())
 	}
 	fmt.Println("index=", index)
-	// output: index=1
+	// output: index= 1
 }

@@ -12,7 +12,7 @@ func TestContain_isContainString(t *testing.T) {
 	}
 	tests := []struct {
 		Name        string
-		T           *Contain
+		T           *contain
 		Args        args
 		WantIsExist bool
 		WantErr     bool
@@ -21,14 +21,14 @@ func TestContain_isContainString(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.Name, func(t *testing.T) {
-			contain := &Contain{}
+			contain := &contain{}
 			gotIsExist, err := contain.isContainString(tt.Args.Data, tt.Args.Element)
 			if (err != nil) != tt.WantErr {
-				t.Errorf("Contain.isContainString() error = %v, WantErr %v", err, tt.WantErr)
+				t.Errorf("contain.isContainString() error = %v, WantErr %v", err, tt.WantErr)
 				return
 			}
 			if gotIsExist != tt.WantIsExist {
-				t.Errorf("Contain.isContainString() = %v, Want %v", gotIsExist, tt.WantIsExist)
+				t.Errorf("contain.isContainString() = %v, Want %v", gotIsExist, tt.WantIsExist)
 			}
 		})
 	}
@@ -41,7 +41,7 @@ func TestContain_isContainInt(t *testing.T) {
 	}
 	tests := []struct {
 		Name        string
-		T           *Contain
+		T           *contain
 		Args        args
 		WantIsExist bool
 		WantErr     bool
@@ -50,14 +50,14 @@ func TestContain_isContainInt(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.Name, func(t *testing.T) {
-			contain := &Contain{}
+			contain := &contain{}
 			gotIsExist, err := contain.isContainInt(tt.Args.Data, tt.Args.Element)
 			if (err != nil) != tt.WantErr {
-				t.Errorf("Contain.isContainInt() error = %v, WantErr %v", err, tt.WantErr)
+				t.Errorf("contain.isContainInt() error = %v, WantErr %v", err, tt.WantErr)
 				return
 			}
 			if gotIsExist != tt.WantIsExist {
-				t.Errorf("Contain.isContainInt() = %v, Want %v", gotIsExist, tt.WantIsExist)
+				t.Errorf("contain.isContainInt() = %v, Want %v", gotIsExist, tt.WantIsExist)
 			}
 		})
 	}
@@ -70,7 +70,7 @@ func TestContain_isContainFloat32(t *testing.T) {
 	}
 	tests := []struct {
 		Name        string
-		T           *Contain
+		T           *contain
 		Args        args
 		WantIsExist bool
 		WantErr     bool
@@ -79,14 +79,14 @@ func TestContain_isContainFloat32(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.Name, func(t *testing.T) {
-			contain := &Contain{}
+			contain := &contain{}
 			gotIsExist, err := contain.isContainFloat32(tt.Args.Data, tt.Args.Element)
 			if (err != nil) != tt.WantErr {
-				t.Errorf("Contain.isContainFloat32() error = %v, WantErr %v", err, tt.WantErr)
+				t.Errorf("contain.isContainFloat32() error = %v, WantErr %v", err, tt.WantErr)
 				return
 			}
 			if gotIsExist != tt.WantIsExist {
-				t.Errorf("Contain.isContainFloat32() = %v, Want %v", gotIsExist, tt.WantIsExist)
+				t.Errorf("contain.isContainFloat32() = %v, Want %v", gotIsExist, tt.WantIsExist)
 			}
 		})
 	}
@@ -99,7 +99,7 @@ func TestContain_isContainUint(t *testing.T) {
 	}
 	tests := []struct {
 		Name        string
-		T           *Contain
+		T           *contain
 		Args        args
 		WantIsExist bool
 		WantErr     bool
@@ -108,14 +108,14 @@ func TestContain_isContainUint(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.Name, func(t *testing.T) {
-			contain := &Contain{}
+			contain := &contain{}
 			gotIsExist, err := contain.isContainUint(tt.Args.Data, tt.Args.Element)
 			if (err != nil) != tt.WantErr {
-				t.Errorf("Contain.isContainUint() error = %v, WantErr %v", err, tt.WantErr)
+				t.Errorf("contain.isContainUint() error = %v, WantErr %v", err, tt.WantErr)
 				return
 			}
 			if gotIsExist != tt.WantIsExist {
-				t.Errorf("Contain.isContainUint() = %v, Want %v", gotIsExist, tt.WantIsExist)
+				t.Errorf("contain.isContainUint() = %v, Want %v", gotIsExist, tt.WantIsExist)
 			}
 		})
 	}
@@ -129,7 +129,7 @@ func TestContain_isContainStructs(t *testing.T) {
 	}
 	tests := []struct {
 		Name        string
-		T           *Contain
+		T           *contain
 		Args        args
 		WantIsExist bool
 		WantErr     bool
@@ -138,14 +138,14 @@ func TestContain_isContainStructs(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.Name, func(t *testing.T) {
-			contain := &Contain{}
+			contain := &contain{}
 			gotIsExist, err := contain.isContainStructs(tt.Args.Data, tt.Args.Element, tt.Args.Tag)
 			if (err != nil) != tt.WantErr {
-				t.Errorf("Contain.isContainStructs() error = %v, WantErr %v", err, tt.WantErr)
+				t.Errorf("contain.isContainStructs() error = %v, WantErr %v", err, tt.WantErr)
 				return
 			}
 			if gotIsExist != tt.WantIsExist {
-				t.Errorf("Contain.isContainStructs() = %v, Want %v", gotIsExist, tt.WantIsExist)
+				t.Errorf("contain.isContainStructs() = %v, Want %v", gotIsExist, tt.WantIsExist)
 			}
 		})
 	}
@@ -159,7 +159,7 @@ func TestContain_decodeStruct(t *testing.T) {
 	}
 	tests := []struct {
 		Name        string
-		T           *Contain
+		T           *contain
 		Args        args
 		WantIsExist bool
 		WantErr     bool
@@ -168,14 +168,14 @@ func TestContain_decodeStruct(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.Name, func(t *testing.T) {
-			contain := &Contain{}
+			contain := &contain{}
 			gotIsExist, err := contain.decodeStruct(tt.Args.DataVal, tt.Args.Element, tt.Args.Tag)
 			if (err != nil) != tt.WantErr {
-				t.Errorf("Contain.decodeStruct() error = %v, WantErr %v", err, tt.WantErr)
+				t.Errorf("contain.decodeStruct() error = %v, WantErr %v", err, tt.WantErr)
 				return
 			}
 			if gotIsExist != tt.WantIsExist {
-				t.Errorf("Contain.decodeStruct() = %v, Want %v", gotIsExist, tt.WantIsExist)
+				t.Errorf("contain.decodeStruct() = %v, Want %v", gotIsExist, tt.WantIsExist)
 			}
 		})
 	}
