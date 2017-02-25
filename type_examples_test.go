@@ -6,7 +6,7 @@ import (
 	"github.com/1046102779/slicelement"
 )
 
-func ExampleContain_Int() {
+func ExampleContains_Int() {
 	var (
 		data []int = []int{1, 2, 3, 4, 5}
 		elem int   = 2
@@ -23,7 +23,7 @@ func ExampleContain_Int() {
 	return
 }
 
-func ExampleContain_Uint() {
+func ExampleContains_Uint() {
 	var (
 		data []uint = []uint{1, 2, 3, 4, 5}
 		elem uint   = 2
@@ -39,7 +39,7 @@ func ExampleContain_Uint() {
 	}
 }
 
-func ExampleContain_String() {
+func ExampleContains_String() {
 	var (
 		data []string = []string{"abc", "def", "hig"}
 		elem string   = "def"
@@ -55,7 +55,7 @@ func ExampleContain_String() {
 	}
 }
 
-func ExampleContain_Float32() {
+func ExampleContains_Float32() {
 	var (
 		data []float32 = []float32{1, 2, 3, 4, 5}
 		elem float32   = 2
