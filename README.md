@@ -43,6 +43,8 @@ desc: if the data's type is not []*struct/[]struct, the tag value is empty
 
 ## Usage & Example
 
+For usage and examples see the [Godoc](https://godoc.org/github.com/1046102779/slicelement)
+
 three practical code examples are shown below:
 
 ###  example 1:  []struct  GetIndex
