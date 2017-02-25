@@ -1,4 +1,3 @@
-// add list operation, include union, interaction and difference
 package slicelement
 
 import (

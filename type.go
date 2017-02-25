@@ -3,8 +3,6 @@
 // it not only supports the buildin types which includes []int/[]*int, []float/[]*float, []string/[]*string,
 // but also it supports []struct/[]*struct .
 // The latter is very important and convenient
-//
-// it expose functionality to get a element index whether exists in slice data
 package slicelement
 
 import (
