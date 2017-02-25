@@ -45,7 +45,7 @@ desc: if the data's type is not []*struct/[]struct, the tag value is empty
 
 three practical code examples are shown below:
 
-###  example 1:  []struct  
+###  example 1:  []struct  GetIndex
 ```go
 data := []*Person{
     &Person{
@@ -69,7 +69,7 @@ fmt.Println("index=", index)
 // output: index=1
 ```
 
-###  example 2:  []struct  
+###  example 2:  []struct GetUnion 
 ```go
 type Student struct {
     Name string
