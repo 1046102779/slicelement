@@ -12,7 +12,7 @@ import (
 )
 
 // check input dataA, if data is nil, it will new object
-func CheckSetDataA(data interface{}) (err error) {
+func checkSetDataA(data interface{}) (err error) {
 	value := reflect.ValueOf(data)
 	if data == nil {
 		// it need new object
@@ -31,7 +31,7 @@ func CheckSetDataA(data interface{}) (err error) {
 }
 
 // check input dataB, if dataB is nil and check whether the data  need to be added
-func CheckSetDataB(data interface{}) (needAdd bool, err error) {
+func checkSetDataB(data interface{}) (needAdd bool, err error) {
 	value := reflect.ValueOf(data)
 	if value.Kind() != reflect.Slice && value.Kind() != reflect.Array {
 		err = errors.New("the second data must be slice or array")
@@ -46,12 +46,12 @@ func CheckSetDataB(data interface{}) (needAdd bool, err error) {
 // check two input datas
 func checkSetInputData(dataA interface{}, dataB interface{}) (needAdd bool, err error) {
 	// check dataA
-	if err = CheckSetDataA(dataA); err != nil {
+	if err = checkSetDataA(dataA); err != nil {
 		err = errors.Wrap(err, "checkSetInputData")
 		return
 	}
 	// check dataB
-	if needAdd, err = CheckSetDataB(dataB); err != nil {
+	if needAdd, err = checkSetDataB(dataB); err != nil {
 		err = errors.Wrap(err, "checkSetInputData")
 		return false, err
 	} else if !needAdd {

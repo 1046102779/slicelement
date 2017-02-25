@@ -1,7 +1,6 @@
 package slicelement
 
 import (
-	"fmt"
 	"reflect"
 
 	"github.com/pkg/errors"
@@ -108,7 +107,6 @@ func getSliceUnderlyKind(data interface{}) (kind reflect.Kind, err error) {
 //  public method，the data whether exists element
 func Contains(data interface{}, element interface{}, tag string) (isExist bool, err error) {
 	// data only supports slice or array type
-	fmt.Println("kind: ", reflect.ValueOf(element).Kind())
 	if err = checkInputValid(data, element); err != nil {
 		err = errors.Wrap(err, "Contains")
 		return
