@@ -1,7 +1,4 @@
 // add list operation, include union, interaction and difference
-// 1. Union(data []interface{},  dest []interface{}, tagName string)
-// 2. Interaction(data []interface{}, dest interface{}, tagName string)
-// 3. Difference(data []interface{}, dest interface{}, tagName string)
 package slicelement
 
 import (
@@ -79,12 +76,12 @@ func checkSetInputData(dataA interface{}, dataB interface{}) (needAdd bool, err 
 func GetUnion(dataA interface{}, dataB interface{}, tagName string) (result interface{}, err error) {
 	var needAdd bool = false
 	if needAdd, err = checkSetInputData(dataA, dataB); err != nil {
-		err = errors.Wrap(err, "Union")
+		err = errors.Wrap(err, "GetUnion")
 		return
 	} else if !needAdd {
 		return dataA, nil
 	}
-	union := &Union{}
+	union := &union{}
 	kindA, err := getSliceUnderlyKind(dataA)
 	if err != nil {
 		err = errors.Wrap(err, "GetUnion")
@@ -109,7 +106,7 @@ func GetInteraction(dataA interface{}, dataB interface{}, tagName string) (resul
 	} else if !needAdd {
 		return dataA, nil
 	}
-	interaction := &Interaction{}
+	interaction := &interaction{}
 	kindA, err := getSliceUnderlyKind(dataA)
 	if err != nil {
 		err = errors.Wrap(err, "GetInteraction")
@@ -129,12 +126,12 @@ func GetInteraction(dataA interface{}, dataB interface{}, tagName string) (resul
 func GetDifference(dataA interface{}, dataB interface{}, tagName string) (result interface{}, err error) {
 	var needAdd bool = false
 	if needAdd, err = checkSetInputData(dataA, dataB); err != nil {
-		err = errors.Wrap(err, "Union")
+		err = errors.Wrap(err, "GetDifference")
 		return
 	} else if !needAdd {
 		return dataA, nil
 	}
-	diff := &Difference{}
+	diff := &difference{}
 	kindA, err := getSliceUnderlyKind(dataA)
 	if err != nil {
 		err = errors.Wrap(err, "GetDifference")
@@ -151,9 +148,9 @@ func GetDifference(dataA interface{}, dataB interface{}, tagName string) (result
 }
 
 // union
-type Union struct{}
+type union struct{}
 
-func (t *Union) getNonStruct(dataA interface{}, dataB interface{}) (result interface{}, err error) {
+func (t *union) getNonStruct(dataA interface{}, dataB interface{}) (result interface{}, err error) {
 	valueB := reflect.ValueOf(dataB)
 	resultVal := reflect.ValueOf(dataA)
 	for index := 0; index < valueB.Len(); index++ {
@@ -173,7 +170,7 @@ func (t *Union) getNonStruct(dataA interface{}, dataB interface{}) (result inter
 }
 
 // tagName: unique key
-func (t *Union) getStruct(dataA interface{}, dataB interface{}, tagName string) (result interface{}, err error) {
+func (t *union) getStruct(dataA interface{}, dataB interface{}, tagName string) (result interface{}, err error) {
 	if strings.TrimSpace(tagName) == "" {
 		err = errors.New("slice struct's FieldName can't be empty")
 		return
@@ -210,9 +207,9 @@ func getStructTagIndex(typ reflect.Type, tagName string) int {
 }
 
 // interaction
-type Interaction struct{}
+type interaction struct{}
 
-func (t *Interaction) getNonStruct(dataA interface{}, dataB interface{}) (result interface{}, err error) {
+func (t *interaction) getNonStruct(dataA interface{}, dataB interface{}) (result interface{}, err error) {
 	valueB := reflect.ValueOf(dataB)
 	// new zero value
 	resultVal := reflect.MakeSlice(reflect.ValueOf(dataA).Type(), 0, 0)
@@ -231,7 +228,7 @@ func (t *Interaction) getNonStruct(dataA interface{}, dataB interface{}) (result
 	return resultVal.Interface(), nil
 }
 
-func (t *Interaction) getStruct(dataA interface{}, dataB interface{}, tagName string) (result interface{}, err error) {
+func (t *interaction) getStruct(dataA interface{}, dataB interface{}, tagName string) (result interface{}, err error) {
 	if strings.TrimSpace(tagName) == "" {
 		err = errors.New("slice struct's FieldName can't be empty")
 		return
@@ -258,9 +255,9 @@ func (t *Interaction) getStruct(dataA interface{}, dataB interface{}, tagName st
 	return resultVal.Interface(), nil
 }
 
-type Difference struct{}
+type difference struct{}
 
-func (t *Difference) getNonStruct(dataA interface{}, dataB interface{}) (result interface{}, err error) {
+func (t *difference) getNonStruct(dataA interface{}, dataB interface{}) (result interface{}, err error) {
 	valueB := reflect.ValueOf(dataB)
 	// new zero value
 	resultVal := reflect.MakeSlice(reflect.ValueOf(dataA).Type(), 0, 0)
@@ -281,7 +278,7 @@ func (t *Difference) getNonStruct(dataA interface{}, dataB interface{}) (result 
 	return resultVal.Interface(), nil
 }
 
-func (t *Difference) getStruct(dataA interface{}, dataB interface{}, tagName string) (result interface{}, err error) {
+func (t *difference) getStruct(dataA interface{}, dataB interface{}, tagName string) (result interface{}, err error) {
 	if strings.TrimSpace(tagName) == "" {
 		err = errors.New("slice struct's FieldName can't be empty")
 		return
@@ -306,5 +303,4 @@ func (t *Difference) getStruct(dataA interface{}, dataB interface{}, tagName str
 		}
 	}
 	return resultVal.Interface(), nil
-	return
 }

@@ -1,4 +1,3 @@
-// get the element index in data
 package slicelement
 
 import (
