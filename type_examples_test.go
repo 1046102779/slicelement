@@ -55,7 +55,7 @@ func ExampleContains_String() {
 	}
 }
 
-func ExampleContains_Float32() {
+func ExampleContains_float32() {
 	var (
 		data []float32 = []float32{1, 2, 3, 4, 5}
 		elem float32   = 2
