@@ -7,10 +7,10 @@ import (
 	"github.com/pkg/errors"
 )
 
-type Index struct{}
+type indexT struct{}
 
 // int type
-func (t *Index) getIndexInt(data interface{}, element interface{}) (index int, err error) {
+func (t *indexT) getIndexInt(data interface{}, element interface{}) (index int, err error) {
 	dataVal := reflect.ValueOf(data)
 	elem := reflect.ValueOf(element).Int()
 	for index = 0; index < dataVal.Len(); index++ {
@@ -23,7 +23,7 @@ func (t *Index) getIndexInt(data interface{}, element interface{}) (index int, e
 }
 
 // string type
-func (t *Index) getIndexString(data interface{}, element interface{}) (index int, err error) {
+func (t *indexT) getIndexString(data interface{}, element interface{}) (index int, err error) {
 	dataVal := reflect.ValueOf(data)
 	for index = 0; index < dataVal.Len(); index++ {
 		elemDataVal := reflect.Indirect(dataVal.Index(index))
@@ -35,7 +35,7 @@ func (t *Index) getIndexString(data interface{}, element interface{}) (index int
 }
 
 // float32 type
-func (t *Index) getIndexFloat32(data interface{}, element interface{}) (index int, err error) {
+func (t *indexT) getIndexFloat32(data interface{}, element interface{}) (index int, err error) {
 	dataVal := reflect.ValueOf(data)
 	elem := reflect.ValueOf(element).Float()
 	for index = 0; index < dataVal.Len(); index++ {
@@ -48,7 +48,7 @@ func (t *Index) getIndexFloat32(data interface{}, element interface{}) (index in
 }
 
 // uint type
-func (t *Index) getIndexUint(data interface{}, element interface{}) (index int, err error) {
+func (t *indexT) getIndexUint(data interface{}, element interface{}) (index int, err error) {
 	dataVal := reflect.ValueOf(data)
 	elem := reflect.ValueOf(element).Uint()
 	for index = 0; index < dataVal.Len(); index++ {
@@ -61,11 +61,11 @@ func (t *Index) getIndexUint(data interface{}, element interface{}) (index int, 
 }
 
 // struct type
-func (t *Index) getIndexStruct(data interface{}, element interface{}, tag string) (index int, err error) {
+func (t *indexT) getIndexStruct(data interface{}, element interface{}, tag string) (index int, err error) {
 	var (
 		isExist bool = false
 	)
-	contain := new(Contain)
+	contain := new(contain)
 	dataVal := reflect.ValueOf(data)
 	for index = 0; index < dataVal.Len(); index++ {
 		elemDataVal := reflect.Indirect(dataVal.Index(index))
@@ -86,7 +86,7 @@ func (t *Index) getIndexStruct(data interface{}, element interface{}, tag string
 }
 
 // decode struct type
-func (t *Index) decodeStruct(DataVal reflect.Value, element interface{}, tag string) (isExist bool, err error) {
+func (t *indexT) decodeStruct(DataVal reflect.Value, element interface{}, tag string) (isExist bool, err error) {
 	noTag := false
 	if DataVal.Kind() != reflect.Struct {
 		err = errors.Wrap(errors.New("the value's kind is not struct"), "decodeStruct")

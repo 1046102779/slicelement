@@ -7,14 +7,14 @@ import (
 	"github.com/pkg/errors"
 )
 
-type Contain struct{}
+type contain struct{}
 
 const (
 	EPSINON float64 = 0.00001
 )
 
 // string type
-func (t *Contain) isContainString(data interface{}, element interface{}) (isExist bool, err error) {
+func (t *contain) isContainString(data interface{}, element interface{}) (isExist bool, err error) {
 	dataVal := reflect.ValueOf(data)
 	for index := 0; index < dataVal.Len(); index++ {
 		elemDataVal := reflect.Indirect(dataVal.Index(index))
@@ -26,7 +26,7 @@ func (t *Contain) isContainString(data interface{}, element interface{}) (isExis
 }
 
 // int type
-func (t *Contain) isContainInt(data interface{}, element interface{}) (isExist bool, err error) {
+func (t *contain) isContainInt(data interface{}, element interface{}) (isExist bool, err error) {
 	dataVal := reflect.ValueOf(data)
 	elem := reflect.ValueOf(element).Int()
 	for index := 0; index < dataVal.Len(); index++ {
@@ -39,7 +39,7 @@ func (t *Contain) isContainInt(data interface{}, element interface{}) (isExist b
 }
 
 // float32 type
-func (t *Contain) isContainFloat32(data interface{}, element interface{}) (isExist bool, err error) {
+func (t *contain) isContainFloat32(data interface{}, element interface{}) (isExist bool, err error) {
 	dataVal := reflect.ValueOf(data)
 	elem := reflect.ValueOf(element).Float()
 	for index := 0; index < dataVal.Len(); index++ {
@@ -52,7 +52,7 @@ func (t *Contain) isContainFloat32(data interface{}, element interface{}) (isExi
 }
 
 // uint type
-func (t *Contain) isContainUint(data interface{}, element interface{}) (isExist bool, err error) {
+func (t *contain) isContainUint(data interface{}, element interface{}) (isExist bool, err error) {
 	dataVal := reflect.ValueOf(data)
 	elem := reflect.ValueOf(element).Uint()
 	for index := 0; index < dataVal.Len(); index++ {
@@ -65,7 +65,7 @@ func (t *Contain) isContainUint(data interface{}, element interface{}) (isExist 
 }
 
 // struct type
-func (t *Contain) isContainStructs(data interface{}, element interface{}, tag string) (isExist bool, err error) {
+func (t *contain) isContainStructs(data interface{}, element interface{}, tag string) (isExist bool, err error) {
 	dataVal := reflect.ValueOf(data)
 	for index := 0; index < dataVal.Len(); index++ {
 		elemDataVal := reflect.Indirect(dataVal.Index(index))
@@ -86,7 +86,7 @@ func (t *Contain) isContainStructs(data interface{}, element interface{}, tag st
 }
 
 // decode struct type
-func (t *Contain) decodeStruct(DataVal reflect.Value, element interface{}, tag string) (isExist bool, err error) {
+func (t *contain) decodeStruct(DataVal reflect.Value, element interface{}, tag string) (isExist bool, err error) {
 	noTag := false
 	if DataVal.Kind() != reflect.Struct {
 		err = errors.Wrap(errors.New("the value's kind is not struct"), "decodeStruct")

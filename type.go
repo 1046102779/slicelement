@@ -116,7 +116,7 @@ func Contains(data interface{}, element interface{}, tag string) (isExist bool, 
 		err = errors.Wrap(err, "Contains")
 		return
 	}
-	contain := new(Contain)
+	contain := new(contain)
 	kind, err := getSliceUnderlyKind(data)
 	if err != nil {
 		return false, err
@@ -147,7 +147,7 @@ func GetIndex(data interface{}, element interface{}, tag string) (index int, err
 		err = errors.Wrap(err, "Contains")
 		return
 	}
-	indexInstance := new(Index)
+	indexInstance := new(indexT)
 	kind, err := getSliceUnderlyKind(data)
 	if err != nil {
 		return -1, err
