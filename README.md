@@ -45,8 +45,6 @@ desc: if the data's type is not []*struct/[]struct, the tag value is empty
 
 For usage and examples see the [Godoc](https://godoc.org/github.com/1046102779/slicelement)
 
-three practical code examples are shown below:
-
 ###  example 1:  []struct  GetIndex
 ```go
 data := []*Person{
@@ -64,7 +62,6 @@ data := []*Person{
 elem := 18
 index, err := slicelement.GetIndex(data, elem, "Age")
 if err != nil {
-    //fmt.Println(errors.Cause(err).Error())
     fmt.Println(err.Error())
 }
 fmt.Println("index=", index)
@@ -96,7 +93,3 @@ if studentC, err := slicelement.GetUnion(studentA, studentB, "Age"); err != nil 
 // result:  [{donghai 29} {jixaing 19} {Joe 18}]  
 // {"David", 19} is covered by {"jixiang", 19}
 ```
-
-## TODO
-
-* add test data

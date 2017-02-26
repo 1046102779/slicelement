@@ -13,7 +13,8 @@ func ExampleGetIndex_int() {
 	if err != nil {
 		fmt.Println(err.Error())
 	}
-	fmt.Println("index=", index)
+	fmt.Printf("index=%d\n", index)
+	// output: index=1
 	return
 }
 
@@ -26,7 +27,8 @@ func ExampleGetIndex_uint() {
 	if err != nil {
 		fmt.Println(err.Error())
 	}
-	fmt.Println("index=", index)
+	fmt.Printf("index=%d\n", index)
+	// output: index=1
 	return
 }
 
@@ -39,7 +41,8 @@ func ExampleGetIndex_string() {
 	if err != nil {
 		fmt.Println(err.Error())
 	}
-	fmt.Println("index=", index)
+	fmt.Printf("index=%d\n", index)
+	// output: index=1
 	return
 }
 
@@ -52,7 +55,8 @@ func ExampleGetIndex_float32() {
 	if err != nil {
 		fmt.Println(err.Error())
 	}
-	fmt.Println("index=", index)
+	fmt.Printf("index=%d\n", index)
+	// output: index=1
 	return
 }
 
@@ -77,9 +81,8 @@ func ExampleGetIndex_struct() {
 	elem := 18
 	index, err := GetIndex(data, elem, "Age")
 	if err != nil {
-		//fmt.Println(errors.Cause(err).Error())
 		fmt.Println(err.Error())
 	}
-	fmt.Println("index=", index)
-	// output: index= 1
+	fmt.Printf("index=%d\n", index)
+	// output: index=1
 }

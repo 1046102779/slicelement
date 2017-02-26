@@ -12,7 +12,8 @@ func ExampleGetUnion_int() {
 	if err != nil {
 		fmt.Println(err.Error())
 	}
-	fmt.Println("temp: ", temp)
+	fmt.Println("result:", temp)
+	// output: result: [1 2 3 4 5 6 7]
 	return
 }
 
@@ -23,7 +24,8 @@ func ExampleGetUnion_uint() {
 	if err != nil {
 		fmt.Println(err.Error())
 	}
-	fmt.Println("temp: ", temp)
+	fmt.Println("result:", temp)
+	// output: result: [1 2 3 4 5 6 7]
 	return
 }
 
@@ -34,7 +36,8 @@ func ExampleGetUnion_float32() {
 	if err != nil {
 		fmt.Println(err.Error())
 	}
-	fmt.Println("temp: ", temp)
+	fmt.Println("result:", temp)
+	// output: result: [1 2 3 4 5 6 7]
 	return
 }
 
@@ -46,7 +49,11 @@ func ExampleGetUnion_string() {
 	if err != nil {
 		fmt.Println(err.Error())
 	}
-	fmt.Println("temp: ", temp)
+	value := temp.([]*string)
+	for index := 0; index < len(value); index++ {
+		fmt.Printf("%s ", *value[index])
+	}
+	// output: 1 2 3 4 5
 }
 
 func ExampleGetUnion_struct() {
@@ -78,8 +85,9 @@ func ExampleGetUnion_struct() {
 	if value, err := GetUnion(studentA, studentB, "Age"); err != nil {
 		fmt.Println(err.Error())
 	} else {
-		fmt.Println("studentA U studentB, result: ", value)
+		fmt.Println("studentA U studentB, result:", value)
 	}
+	// output: studentA U studentB, result: [{donghai 29} {jixaing 19} {Joe 18}]
 }
 
 // interaction
@@ -90,7 +98,8 @@ func ExampleGetInteraction_int() {
 	if err != nil {
 		fmt.Println(err.Error())
 	}
-	fmt.Println("temp: ", temp)
+	fmt.Println("result:", temp)
+	// output: result: [2 4]
 	return
 }
 
@@ -101,7 +110,8 @@ func ExampleGetInteraction_uint() {
 	if err != nil {
 		fmt.Println(err.Error())
 	}
-	fmt.Println("temp: ", temp)
+	fmt.Println("result:", temp)
+	// output: result: [2 4]
 	return
 }
 
@@ -112,7 +122,8 @@ func ExampleGetInteraction_float32() {
 	if err != nil {
 		fmt.Println(err.Error())
 	}
-	fmt.Println("temp: ", temp)
+	fmt.Println("result:", temp)
+	// output: result: [2 4]
 	return
 }
 

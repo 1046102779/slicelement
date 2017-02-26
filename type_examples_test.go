@@ -18,6 +18,7 @@ func ExampleContains_int() {
 	} else {
 		fmt.Println("elem in data is not exist")
 	}
+	// output:elem in data is exist
 	return
 }
 
@@ -35,6 +36,7 @@ func ExampleContains_uint() {
 	} else {
 		fmt.Println("elem in data is not exist")
 	}
+	// output: elem in data is exist
 }
 
 func ExampleContains_string() {
@@ -51,6 +53,7 @@ func ExampleContains_string() {
 	} else {
 		fmt.Println("elem in data is not exist")
 	}
+	// output: elem in data is exist
 }
 
 func ExampleContains_float32() {
@@ -67,4 +70,5 @@ func ExampleContains_float32() {
 	} else {
 		fmt.Println("elem in data is not exist")
 	}
+	// output: elem in data is exist
 }

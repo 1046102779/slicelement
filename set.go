@@ -89,7 +89,7 @@ func GetUnion(dataA interface{}, dataB interface{}, tagName string) (result inte
 	}
 	kindA = getKindByKind(kindA)
 	switch kindA {
-	case reflect.Int, reflect.Float32, reflect.String:
+	case reflect.Uint, reflect.Int, reflect.Float32, reflect.String:
 		result, err = union.getNonStruct(dataA, dataB)
 	case reflect.Struct:
 		result, err = union.getStruct(dataA, dataB, tagName)
@@ -115,7 +115,7 @@ func GetInteraction(dataA interface{}, dataB interface{}, tagName string) (resul
 	}
 	kindA = getKindByKind(kindA)
 	switch kindA {
-	case reflect.Int, reflect.Float32, reflect.String:
+	case reflect.Uint, reflect.Int, reflect.Float32, reflect.String:
 		result, err = interaction.getNonStruct(dataA, dataB)
 	case reflect.Struct:
 		result, err = interaction.getStruct(dataA, dataB, tagName)
