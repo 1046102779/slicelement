@@ -5,7 +5,7 @@ import (
 )
 
 // union
-func ExampleGetUnion_int_int() {
+func ExampleGetUnion_int() {
 	dataA := []int{1, 2, 3, 4, 5}
 	dataB := []int{2, 4, 6, 7}
 	temp, err := GetUnion(dataA, dataB, "")
@@ -16,7 +16,7 @@ func ExampleGetUnion_int_int() {
 	return
 }
 
-func ExampleGetUnion_uint_uint() {
+func ExampleGetUnion_uint() {
 	dataA := []uint{1, 2, 3, 4, 5}
 	dataB := []uint{2, 4, 6, 7}
 	temp, err := GetUnion(dataA, dataB, "")
@@ -27,7 +27,7 @@ func ExampleGetUnion_uint_uint() {
 	return
 }
 
-func ExampleGetUnion_float32_float32() {
+func ExampleGetUnion_float32() {
 	dataA := []float32{1, 2, 3, 4, 5}
 	dataB := []float32{2, 4, 6, 7}
 	temp, err := GetUnion(dataA, dataB, "")
@@ -38,7 +38,7 @@ func ExampleGetUnion_float32_float32() {
 	return
 }
 
-func ExampleGetUnion_string_string() {
+func ExampleGetUnion_string() {
 	str1, str2, str3, str4, str5 := "1", "2", "3", "4", "5"
 	dataA := []*string{&str1, &str2, &str3}
 	dataB := []*string{&str2, &str3, &str4, &str5}
@@ -49,7 +49,7 @@ func ExampleGetUnion_string_string() {
 	fmt.Println("temp: ", temp)
 }
 
-func ExampleGetUnion_struct_struct() {
+func ExampleGetUnion_struct() {
 	type Student struct {
 		Name string
 		Age  int
@@ -83,7 +83,7 @@ func ExampleGetUnion_struct_struct() {
 }
 
 // interaction
-func ExampleGetInteraction_int_int() {
+func ExampleGetInteraction_int() {
 	dataA := []int{1, 2, 3, 4, 5}
 	dataB := []int{2, 4, 6, 7}
 	temp, err := GetInteraction(dataA, dataB, "")
@@ -94,7 +94,7 @@ func ExampleGetInteraction_int_int() {
 	return
 }
 
-func ExampleGetInteraction_uint_uint() {
+func ExampleGetInteraction_uint() {
 	dataA := []uint{1, 2, 3, 4, 5}
 	dataB := []uint{2, 4, 6, 7}
 	temp, err := GetInteraction(dataA, dataB, "")
@@ -105,7 +105,7 @@ func ExampleGetInteraction_uint_uint() {
 	return
 }
 
-func ExampleGetInteraction_float32_float32() {
+func ExampleGetInteraction_float32() {
 	dataA := []float32{1, 2, 3, 4, 5}
 	dataB := []float32{2, 4, 6, 7}
 	temp, err := GetInteraction(dataA, dataB, "")
@@ -116,7 +116,7 @@ func ExampleGetInteraction_float32_float32() {
 	return
 }
 
-func ExampleGetInteraction_string_string() {
+func ExampleGetInteraction_string() {
 	str1, str2, str3, str4, str5 := "1", "2", "3", "4", "5"
 	dataA := []*string{&str1, &str2, &str3}
 	dataB := []*string{&str2, &str3, &str4, &str5}
@@ -127,7 +127,7 @@ func ExampleGetInteraction_string_string() {
 	fmt.Println("temp: ", temp)
 }
 
-func ExampleGetInteraction_struct_struct() {
+func ExampleGetInteraction_struct() {
 	type Student struct {
 		Name string
 		Age  int
@@ -161,7 +161,7 @@ func ExampleGetInteraction_struct_struct() {
 }
 
 // difference
-func ExampleGetDifference_int_int() {
+func ExampleGetDifference_int() {
 	dataA := []int{1, 2, 3, 4, 5}
 	dataB := []int{2, 4, 6, 7}
 	temp, err := GetDifference(dataA, dataB, "")
@@ -172,7 +172,7 @@ func ExampleGetDifference_int_int() {
 	return
 }
 
-func ExampleGetDifference_uint_uint() {
+func ExampleGetDifference_uint() {
 	dataA := []uint{1, 2, 3, 4, 5}
 	dataB := []uint{2, 4, 6, 7}
 	temp, err := GetDifference(dataA, dataB, "")
@@ -183,7 +183,7 @@ func ExampleGetDifference_uint_uint() {
 	return
 }
 
-func ExampleGetDifference_float32_float32() {
+func ExampleGetDifference_float32() {
 	dataA := []float32{1, 2, 3, 4, 5}
 	dataB := []float32{2, 4, 6, 7}
 	temp, err := GetDifference(dataA, dataB, "")
@@ -194,7 +194,7 @@ func ExampleGetDifference_float32_float32() {
 	return
 }
 
-func ExampleGetDifference_string_string() {
+func ExampleGetDifference_string() {
 	str1, str2, str3, str4, str5 := "1", "2", "3", "4", "5"
 	dataA := []*string{&str1, &str2, &str3}
 	dataB := []*string{&str2, &str3, &str4, &str5}
@@ -203,9 +203,10 @@ func ExampleGetDifference_string_string() {
 		fmt.Println(err.Error())
 	}
 	fmt.Println("temp: ", temp)
+	return
 }
 
-func ExampleGetDifference_struct_struct() {
+func ExampleGetDifference_struct() {
 	type Student struct {
 		Name string
 		Age  int

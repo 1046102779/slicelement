@@ -110,6 +110,8 @@ func getSliceUnderlyKind(data interface{}) (kind reflect.Kind, err error) {
 }
 
 //  public method，the data whether exists element
+//
+// if data's type is a slice struct type, param `tag` can't be empty
 func Contains(data interface{}, element interface{}, tag string) (isExist bool, err error) {
 	// data only supports slice or array type
 	if err = checkInputValid(data, element); err != nil {
@@ -141,6 +143,9 @@ func Contains(data interface{}, element interface{}, tag string) (isExist bool, 
 	return
 }
 
+// getting the element index in data, if not exists, return -1, nil
+//
+// if data's type is a slice struct type, param `tag` can't be empty
 func GetIndex(data interface{}, element interface{}, tag string) (index int, err error) {
 	// data only supports slice or array type
 	if err = checkInputValid(data, element); err != nil {

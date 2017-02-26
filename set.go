@@ -71,7 +71,8 @@ func checkSetInputData(dataA interface{}, dataB interface{}) (needAdd bool, err 
 	return
 }
 
-// union operation
+// get interaction . formula result = dataA U dataB
+// both dataA and dataB are a slice type
 func GetUnion(dataA interface{}, dataB interface{}, tagName string) (result interface{}, err error) {
 	var needAdd bool = false
 	if needAdd, err = checkSetInputData(dataA, dataB); err != nil {
@@ -96,7 +97,8 @@ func GetUnion(dataA interface{}, dataB interface{}, tagName string) (result inte
 	return
 }
 
-// interaction operation
+// get interaction . formula result = dataA N dataB
+// both dataA and dataB are a slice type
 func GetInteraction(dataA interface{}, dataB interface{}, tagName string) (result interface{}, err error) {
 	var needAdd bool = false
 	if needAdd, err = checkSetInputData(dataA, dataB); err != nil {
@@ -121,7 +123,8 @@ func GetInteraction(dataA interface{}, dataB interface{}, tagName string) (resul
 	return
 }
 
-// difference operation
+// get difference . formula result = dataA - dataB
+// both dataA and dataB are a slice type
 func GetDifference(dataA interface{}, dataB interface{}, tagName string) (result interface{}, err error) {
 	var needAdd bool = false
 	if needAdd, err = checkSetInputData(dataA, dataB); err != nil {
