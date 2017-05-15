@@ -180,14 +180,14 @@ func (t *union) getStruct(dataA interface{}, dataB interface{}, tagName string) 
 	resultVal := reflect.ValueOf(dataA)
 	// use GetIndex
 	valueB := reflect.ValueOf(dataB)
-	dataBFieldIndex := getStructTagIndex(valueB.Type().Elem(), tagName)
+	dataBFieldIndex := getStructTagIndex(reflect.Indirect(valueB.Index(0)).Type(), tagName)
 	if dataBFieldIndex < 0 {
 		err = errors.New("field `" + tagName + "` not exist in struct")
 		return
 	}
 	var isExist bool = false
 	for index := 0; index < valueB.Len(); index++ {
-		underlyFieldValueB := reflect.Indirect(valueB.Index(index).Field(dataBFieldIndex))
+		underlyFieldValueB := reflect.Indirect(valueB.Index(index)).Field(dataBFieldIndex)
 		if isExist, err = Contains(dataA, underlyFieldValueB.Interface(), tagName); err != nil {
 			err = errors.Wrap(err, "getStruct")
 			return
@@ -239,14 +239,14 @@ func (t *interaction) getStruct(dataA interface{}, dataB interface{}, tagName st
 	resultVal := reflect.MakeSlice(reflect.ValueOf(dataA).Type(), 0, 0)
 	// use GetIndex
 	valueB := reflect.ValueOf(dataB)
-	dataBFieldIndex := getStructTagIndex(valueB.Type().Elem(), tagName)
+	dataBFieldIndex := getStructTagIndex(reflect.Indirect(valueB.Index(0)).Type(), tagName)
 	if dataBFieldIndex < 0 {
 		err = errors.New("field `" + tagName + "` not exist in struct")
 		return
 	}
 	var isExist bool = false
 	for index := 0; index < valueB.Len(); index++ {
-		underlyFieldValueB := reflect.Indirect(valueB.Index(index).Field(dataBFieldIndex))
+		underlyFieldValueB := reflect.Indirect(valueB.Index(index)).Field(dataBFieldIndex)
 		if isExist, err = Contains(dataA, underlyFieldValueB.Interface(), tagName); err != nil {
 			err = errors.Wrap(err, "getStruct")
 			return
@@ -292,14 +292,14 @@ func (t *difference) getStruct(dataA interface{}, dataB interface{}, tagName str
 	if valueA.Len() <= 0 {
 		return nil, nil
 	}
-	dataAFieldIndex := getStructTagIndex(valueA.Type().Elem(), tagName)
+	dataAFieldIndex := getStructTagIndex(reflect.Indirect(valueA.Index(0)).Type(), tagName)
 	if dataAFieldIndex < 0 {
 		err = errors.New("field `" + tagName + "` not exist in struct")
 		return
 	}
 	var isExist bool = false
 	for index := 0; index < valueA.Len(); index++ {
-		underlyFieldValueA := reflect.Indirect(valueA.Index(index).Field(dataAFieldIndex))
+		underlyFieldValueA := reflect.Indirect(valueA.Index(index)).Field(dataAFieldIndex)
 		if isExist, err = Contains(dataB, underlyFieldValueA.Interface(), tagName); err != nil {
 			err = errors.Wrap(err, "getStruct")
 			return
