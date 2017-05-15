@@ -289,6 +289,9 @@ func (t *difference) getStruct(dataA interface{}, dataB interface{}, tagName str
 	resultVal := reflect.MakeSlice(reflect.ValueOf(dataA).Type(), 0, 0)
 	// use GetIndex
 	valueA := reflect.ValueOf(dataA)
+	if valueA.Len() <= 0 {
+		return nil, nil
+	}
 	dataAFieldIndex := getStructTagIndex(valueA.Type().Elem(), tagName)
 	if dataAFieldIndex < 0 {
 		err = errors.New("field `" + tagName + "` not exist in struct")
